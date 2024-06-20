@@ -4,7 +4,7 @@ const app = express();
 
 const config = {
   user: 'sa',
-  password: '123%$#¨%$DFfhgv',
+  password: '123!@hghJGFHGHGjh',
   server: 'localhost',
   database: 'db',
   options: {
