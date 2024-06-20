@@ -11,7 +11,7 @@
 
   <script>
     function buscar() {
-      fetch('http://localhost:3000/buscar')
+      fetch('/buscar')
         .then(response => response.json())
         .then(data => {
           const resultadoDiv = document.getElementById('resultado');
