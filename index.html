@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+  <title>Generic HTML Page</title>
+  <meta name="description" content="Generic">
+  <meta name="keywords" content="generic html">
+</head>
+<body>
+  <button onclick="buscar()">Buscar</button>
+  <div id="resultado"></div>
+
+  <script>
+    function buscarConteudo() {
+      fetch('http://localhost:3000/buscar')
+        .then(response => response.json())
+        .then(data => {
+          const resultadoDiv = document.getElementById('resultado');
+          resultadoDiv.innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+        })
+        .catch(error => {
+          console.error('Erro:', error);
+          alert('Erro na buscar');
+        });
+    }
+  </script>
+</body>
+</html>
