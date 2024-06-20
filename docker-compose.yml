@@ -6,7 +6,7 @@ services:
       - "3000:3000"
     volumes:
       - ./src:/app/src
-    command: npm start
+      - sqlite-data:/app/sqlite-data
 
 volumes:
   sqlite-data:
