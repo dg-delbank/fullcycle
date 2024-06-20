@@ -1,13 +1,9 @@
 tasks:
-  - name: Start SQL Server and Node.js
-    command: docker-compose up -d
+  - name: Start Node.js
+    command: npm start
     openMode: split-right
 
 ports:
-  - name: SQL Server
-    port: 1433
-    onOpen: open-preview
-
   - name: Node.js
     port: 3000
     onOpen: open-preview

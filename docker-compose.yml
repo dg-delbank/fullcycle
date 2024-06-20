@@ -1,16 +1,13 @@
 version: '3.8'
 services:
-  sqlserver:
-    image: mcr.microsoft.com/mssql/server:2019-latest
-    environment:
-      SA_PASSWORD: "123!@hghJGFHGHGjh"
-      ACCEPT_EULA: "Y"
+  nodejs:
+    build: .
     ports:
-      - "1433:1433"
+      - "3000:3000"
     volumes:
-      - ./script.sql:/docker-entrypoint-initdb.d/script.sql
-      - sqlserverdata:/var/opt/mssql
+      - ./src:/app/src
+    command: npm start
 
 volumes:
-  sqlserverdata:
+  sqlite-data:
     driver: local
