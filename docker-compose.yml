@@ -10,8 +10,6 @@ services:
     volumes:
       - ./script.sql:/docker-entrypoint-initdb.d/script.sql
       - sqlserverdata:/var/opt/mssql
-    init-scripts:
-      - script.sql
 
 volumes:
   sqlserverdata:
