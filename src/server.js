@@ -6,6 +6,25 @@ const app = express();
 const mongoUrl = 'mongodb://root:example@mongodb:27017';
 const dbName = 'mydatabase';
 
+const dadosIniciais = [
+    { nome: 'Item 1', descricao: 'Descrição 1' },
+    { nome: 'Item 2', descricao: 'Descrição 2' },
+    { nome: 'Item 3', descricao: 'Descrição 3' }
+  ];
+
+  async function hardCodedData() {
+    try {
+      const client = new MongoClient(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
+      await client.connect();
+      const db = client.db(dbName);
+      const collection = db.collection('tabela');
+      const resultado = await collection.insertMany(dadosIniciais);
+      client.close();
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
+
 async function connectMongo() {
   const client = new MongoClient(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
   await client.connect();
