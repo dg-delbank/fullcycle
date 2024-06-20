@@ -1,32 +1,26 @@
 const express = require('express');
-const sqlite3 = require('sqlite3').verbose();
+const { MongoClient } = require('mongodb');
 const app = express();
 
-const db = new sqlite3.Database('./sqlite-data/db.sqlite');
+const mongoUrl = 'mongodb://root:example@mongodb:27017';
+const dbName = 'mydatabase';
 
-db.serialize(() => {
-  db.run(`
-    CREATE TABLE IF NOT EXISTS tabela (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      nome TEXT,
-      idade INTEGER
-    )
-  `);
+async function connectMongo() {
+  const client = new MongoClient(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
+  await client.connect();
+  return client.db(dbName);
+}
 
-  db.run(`
-    INSERT INTO tabela (nome, idade) VALUES ('João', 30), ('Maria', 25), ('Pedro', 40)
-  `);
-});
-
-app.get('/buscar', (req, res) => {
-  db.all('SELECT * FROM tabela', (err, rows) => {
-    if (err) {
-      console.error('Erro ao buscar conteúdo:', err.message);
-      res.status(500).send('Erro ao buscar conteúdo');
-    } else {
-      res.json(rows);
-    }
-  });
+app.get('/buscar', async (req, res) => {
+  try {
+    const db = await connectMongo();
+    const collection = db.collection('tabela');
+    const result = await collection.find({}).toArray();
+    res.json(result);
+  } catch (err) {
+    console.error('Erro ao buscar conteúdo:', err.message);
+    res.status(500).send('Erro ao buscar conteúdo');
+  }
 });
 
 const server = app.listen(3000, () => {

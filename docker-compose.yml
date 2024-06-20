@@ -1,24 +1,21 @@
 version: '3.8'
+
 services:
   nodejs:
     build: .
     ports:
       - "3000:3000"
-    volumes:
-      - ./src:/app
     depends_on:
-      - sqlite
+      - mongodb
 
-  sqlite:
-    image: sqlite:latest
+  mongodb:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
     volumes:
-      - ./sqlite-data:/sqlite-data
-    command: >
-      sh -c '
-        sqlite3 /sqlite-data/db.sqlite &&
-        echo "CREATE TABLE IF NOT EXISTS tabela (id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, idade INTEGER);" | sqlite3 /sqlite-data/db.sqlite &&
-        echo "INSERT INTO tabela (nome, idade) VALUES (\"João\", 30), (\"Maria\", 25), (\"Pedro\", 40);" | sqlite3 /sqlite-data/db.sqlite'
+      - mongodbdata:/data/db
 
 volumes:
-  sqlite-data:
+  mongodbdata:
     driver: local
