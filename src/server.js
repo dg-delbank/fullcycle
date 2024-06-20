@@ -1,5 +1,6 @@
 const express = require('express');
 const { MongoClient } = require('mongodb');
+const path = require('path');
 const app = express();
 
 const mongoUrl = 'mongodb://root:example@mongodb:27017';
