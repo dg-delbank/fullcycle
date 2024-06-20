@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   nodejs:
-    build: 
+    build:
       context: .
       dockerfile: Dockerfile
     ports:
@@ -14,5 +14,5 @@ services:
   sqlite:
     image: alpine
     volumes:
-      - ./src/sqlite-data:/sqlite-data
-    command: tail -f /dev/null
+      - ./sqlite-data:/sqlite-data
+    command: sh -c "sqlite3 /sqlite-data/db.sqlite"
