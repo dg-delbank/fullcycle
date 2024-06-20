@@ -1,13 +1,18 @@
 version: '3.8'
 services:
   nodejs:
-    build: .
+    build: 
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
     volumes:
-      - ./src:/app/src
-      - sqlite-data:/app/sqlite-data
+      - ./src:/app
+    depends_on:
+      - sqlite
 
-volumes:
-  sqlite-data:
-    driver: local
+  sqlite:
+    image: alpine
+    volumes:
+      - ./src/sqlite-data:/sqlite-data
+    command: tail -f /dev/null
