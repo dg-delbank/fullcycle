@@ -15,4 +15,4 @@ services:
     image: alpine
     volumes:
       - ./sqlite-data:/sqlite-data
-    command: sh -c "sqlite3 /sqlite-data/db.sqlite"
+    command: sh -c "touch /sqlite-data/db.sqlite && chmod 777 /sqlite-data/db.sqlite && tail -f /dev/null"
