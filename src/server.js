@@ -11,6 +11,10 @@ async function connectMongo() {
   return client.db(dbName);
 }
 
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+  });
+
 app.get('/buscar', async (req, res) => {
   try {
     const db = await connectMongo();
