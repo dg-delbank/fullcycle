@@ -2,20 +2,25 @@ version: '3.8'
 
 services:
   nodejs:
-    build: .
+    container_name: fullcycle_nodejs
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
     depends_on:
       - mongodb
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/mydatabase
 
   mongodb:
+    container_name: fullcycle_mongodb
     image: mongo:latest
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - "27017:27017"
     volumes:
-      - mongodbdata:/data/db
+      - mongodb_data:/data/db
 
 volumes:
-  mongodbdata:
+  mongodb_data:
     driver: local
