@@ -49,4 +49,5 @@ app.get('/buscar', async (req, res) => {
 
 const server = app.listen(3000, () => {
   console.log('Servidor iniciado na porta 3000');
+  hardCodedData()
 });
