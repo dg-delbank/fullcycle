@@ -1,9 +1,7 @@
 version: '3.8'
 services:
   nodejs:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     ports:
       - "3000:3000"
     volumes:
@@ -12,7 +10,15 @@ services:
       - sqlite
 
   sqlite:
-    image: alpine
+    image: sqlite:latest
     volumes:
       - ./sqlite-data:/sqlite-data
-    command: sh -c "touch /sqlite-data/db.sqlite && chmod 777 /sqlite-data/db.sqlite && tail -f /dev/null"
+    command: >
+      sh -c '
+        sqlite3 /sqlite-data/db.sqlite &&
+        echo "CREATE TABLE IF NOT EXISTS tabela (id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, idade INTEGER);" | sqlite3 /sqlite-data/db.sqlite &&
+        echo "INSERT INTO tabela (nome, idade) VALUES (\"João\", 30), (\"Maria\", 25), (\"Pedro\", 40);" | sqlite3 /sqlite-data/db.sqlite'
+
+volumes:
+  sqlite-data:
+    driver: local
