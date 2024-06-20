@@ -27,6 +27,8 @@ app.get('/buscar', async (req, res) => {
   }
 });
 
+app.use(express.static(path.join(__dirname, 'public')));
+
 const server = app.listen(3000, () => {
   console.log('Servidor iniciado na porta 3000');
 });
